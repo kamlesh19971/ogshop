@@ -10,9 +10,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class BsNavbarComponent {
 
+  user!: firebaseAuth.User | any;
+
   constructor(private afAuth: AngularFireAuth) {
-    afAuth.authState.subscribe(x => console.log(x)
-    );
+    afAuth.authState.subscribe(user => this.user = user);
   }
 
 
