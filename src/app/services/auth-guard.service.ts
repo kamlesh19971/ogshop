@@ -4,26 +4,32 @@ import { Observable, map } from 'rxjs';
 import * as firebaseAuth from 'firebase/auth';
 import { AuthService } from './auth.service';
 
-class Permissions {
-  canActivate(user: Observable<any>, router: Router): boolean {
-    if (user) return true;
-    router.navigate(['/login']);
+export class Permissions {
+  canActivate(user: Observable<any>, router: Router, url: string): boolean {
+
+    if (user != null) return true;
+
+    console.log(url);
+
+    router.navigate(['/login'], { queryParams: { returnUrl: url } });
+    // router.navigateByUrl(`/login?returnUrl=${url}`);
     return false;
   }
 }
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthGuard implements CanActivate {
 
   constructor(private auth: AuthService, private router: Router, private permission: Permissions) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-    const user = this.auth.User;
-    return this.permission.canActivate(user, this.router)
+    const user = this.auth.user;
+    console.log(state.url);
+
+    return this.permission.canActivate(user, this.router, state.url);
+
 
     // this.auth.user$.subscribe(user => {
     //   if (user) return true;
