@@ -24,8 +24,9 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
-import { AuthGuard, Permissions } from './services/auth-guard.service';
+import { AuthGuard, AuthPermissions } from './services/auth-guard.service';
 import { UserService } from './services/user.service';
+import { AdminAuthGuardService as AdminAuthGuard, AdminPermissions } from './services/admin-auth-guard.service';
 
 
 @NgModule({
@@ -60,17 +61,20 @@ import { UserService } from './services/user.service';
       { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
 
 
-      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard] },
-      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard] },
+      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ]),
     NgbModule
   ],
   providers: [
     AuthService,
     AuthGuard,
-    Permissions,
-    UserService
+    AuthPermissions,
+    UserService,
+    AdminAuthGuard,
+    AdminPermissions
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
