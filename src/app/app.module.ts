@@ -3,12 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
 import { RouterModule } from '@angular/router';
 
-import { NgbModule, NgbDropdownToggle } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { environment } from 'src/environments/environment';
 
@@ -27,6 +28,11 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard, AuthPermissions } from './services/auth-guard.service';
 import { UserService } from './services/user.service';
 import { AdminAuthGuardService as AdminAuthGuard, AdminPermissions } from './services/admin-auth-guard.service';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/compat/firestore';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+
 
 
 @NgModule({
@@ -41,14 +47,18 @@ import { AdminAuthGuardService as AdminAuthGuard, AdminPermissions } from './ser
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFirestoreModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    // provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
     RouterModule.forRoot([
 
       { path: '', component: HomeComponent },
@@ -62,11 +72,13 @@ import { AdminAuthGuardService as AdminAuthGuard, AdminPermissions } from './ser
 
 
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ]),
     NgbModule
   ],
   providers: [
+    AngularFirestore,
     AuthService,
     AuthGuard,
     AuthPermissions,

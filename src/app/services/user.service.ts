@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as firebaseDatabase from 'firebase/database';
 import * as firebaseAuth from 'firebase/auth';
+import { CollectionReference, doc, DocumentData, addDoc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/compat/database';
+import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import { AppUser } from '../models/app-user';
 
 @Injectable({
@@ -9,16 +11,27 @@ import { AppUser } from '../models/app-user';
 })
 export class UserService {
 
-  constructor(private db: AngularFireDatabase) { }
+  usersRef: CollectionReference<DocumentData>;
+  //private db: AngularFireDatabase,
+  constructor(private firestore: Firestore) {
 
-  save(user: firebaseAuth.User) {
-    this.db.object('/users/' + user.uid).update({
-      name: user.displayName,
-      email: user.email
-    })
+    this.usersRef = collection(this.firestore, 'users');
+
   }
 
-  get(uid: string): AngularFireObject<AppUser> {
-    return this.db.object('/users/' + uid);
+  save(user: firebaseAuth.User) {
+    const dataToUpdate = doc(this.usersRef, user.uid);
+    updateDoc(dataToUpdate, {
+      name: user.displayName,
+      email: user.email
+    });
+
+  }
+
+  async get(uid: string): Promise<any> {
+    const docRef = doc(this.firestore, "users", uid);
+    const docSnap = await getDoc(docRef);
+
+    return docSnap.data();
   }
 }
