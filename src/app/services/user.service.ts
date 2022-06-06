@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import * as firebaseDatabase from 'firebase/database';
 import * as firebaseAuth from 'firebase/auth';
 import { CollectionReference, doc, DocumentData, addDoc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/compat/database';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
-import { AppUser } from '../models/app-user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +18,7 @@ export class UserService {
 
   save(user: firebaseAuth.User) {
     const dataToUpdate = doc(this.usersRef, user.uid);
+
     updateDoc(dataToUpdate, {
       name: user.displayName,
       email: user.email

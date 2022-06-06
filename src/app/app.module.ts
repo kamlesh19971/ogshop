@@ -32,6 +32,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/compat/firestore';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { CategoryService } from './category.service';
 
 
 
@@ -84,7 +85,8 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     AuthPermissions,
     UserService,
     AdminAuthGuard,
-    AdminPermissions
+    AdminPermissions,
+    CategoryService
   ],
 
   bootstrap: [AppComponent]
