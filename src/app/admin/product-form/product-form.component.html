@@ -1,7 +1,7 @@
-<form>
+<form #f="ngForm" (ngSubmit)="save(f.value)">
   <div class="form-group">
     <label for="title">Title</label>
-    <input id="title" class="form-control" type="text" />
+    <input ngModel name="title" id="title" class="form-control" type="text" />
   </div>
 
   <div class="form-group">
@@ -9,23 +9,29 @@
 
     <div class="input-group mb-3">
       <span class="input-group-text">$</span>
-      <input id="price" class="form-control" type="number" />
+      <input
+        ngModel
+        name="price"
+        id="price"
+        class="form-control"
+        type="number"
+      />
     </div>
   </div>
 
   <div class="form-group">
     <label for="category">Category</label>
-    <select id="category" class="form-control">
+    <select ngModel name="category" id="category" class="form-control">
       <option value=""></option>
-      <option *ngFor="let c of categories" value="c.key">{{ c.name }}</option>
+      <option *ngFor="let c of categories" value="{{ c.key }}">
+        {{ c.name }}
+      </option>
     </select>
   </div>
 
   <div class="form-group">
     <label for="imageUrl">Image URL</label>
-    <select id="imageUrl" class="form-control">
-      <option value=""></option>
-    </select>
+    <input ngModel name="imageUrl" id="imageUrl" class="form-control" />
   </div>
   <br />
   <button class="btn btn-primary">Save</button>

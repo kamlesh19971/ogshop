@@ -10,6 +10,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 import { environment } from 'src/environments/environment';
 
@@ -32,7 +33,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/compat/firestore';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
-import { CategoryService } from './category.service';
+import { CategoryService } from './services/category.service';
+import { ProductService } from './services/product.service';
 
 
 
@@ -53,6 +55,7 @@ import { CategoryService } from './category.service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -86,7 +89,8 @@ import { CategoryService } from './category.service';
     UserService,
     AdminAuthGuard,
     AdminPermissions,
-    CategoryService
+    CategoryService,
+    ProductService
   ],
 
   bootstrap: [AppComponent]

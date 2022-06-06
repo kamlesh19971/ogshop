@@ -19,10 +19,7 @@ export class CategoryService {
   async getCategories(): Promise<any[]> {
     const q = query(this.categoriesRef, orderBy("name"));
     const data = await getDocs(q);
-
-    // console.log(data)
     let cats: any[] = [];
-
     data.forEach(doc => {
       cats.push({ key: doc.id, ...doc.data() })
     })
