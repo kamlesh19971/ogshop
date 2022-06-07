@@ -1,15 +1,29 @@
 <form #f="ngForm" (ngSubmit)="save(f.value)">
   <div class="form-group">
     <label for="title">Title</label>
-    <input ngModel name="title" id="title" class="form-control" type="text" />
+    <input
+      required
+      ngModel
+      #title="ngModel"
+      name="title"
+      id="title"
+      class="form-control"
+      type="text"
+    />
+
+    <div *ngIf="title.touched && title.invalid" class="alert alert-danger">
+      Title is Required.
+    </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group mr-1">
     <label for="price">Price</label>
 
     <div class="input-group mb-3">
       <span class="input-group-text">$</span>
       <input
+        required
+        #price="ngModel"
         ngModel
         name="price"
         id="price"
@@ -17,21 +31,51 @@
         type="number"
       />
     </div>
+    <div *ngIf="price.touched && price.invalid" class="alert alert-danger">
+      price is Required.
+    </div>
   </div>
 
   <div class="form-group">
     <label for="category">Category</label>
-    <select ngModel name="category" id="category" class="form-control">
+    <select
+      required
+      #category="ngModel"
+      ngModel
+      name="category"
+      id="category"
+      class="form-control"
+    >
       <option value=""></option>
       <option *ngFor="let c of categories" value="{{ c.key }}">
         {{ c.name }}
       </option>
     </select>
+    <div
+      *ngIf="category.touched && category.invalid"
+      class="alert alert-danger"
+    >
+      Category is Required.
+    </div>
   </div>
 
   <div class="form-group">
     <label for="imageUrl">Image URL</label>
-    <input ngModel name="imageUrl" id="imageUrl" class="form-control" />
+    <input
+      required
+      #imageUrl="ngModel"
+      ngModel
+      name="imageUrl"
+      id="imageUrl"
+      class="form-control"
+    />
+
+    <div
+      *ngIf="imageUrl.touched && imageUrl.invalid"
+      class="alert alert-danger"
+    >
+      ImageUrl is Required.
+    </div>
   </div>
   <br />
   <button class="btn btn-primary">Save</button>

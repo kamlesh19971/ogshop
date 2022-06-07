@@ -16,7 +16,6 @@ export class ProductService {
 
   async create(product: any) {
     const ref = await addDoc(this.productsRef, product);
-    console.log(ref);
   }
 
 }
