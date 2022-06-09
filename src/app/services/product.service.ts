@@ -18,4 +18,13 @@ export class ProductService {
     const ref = await addDoc(this.productsRef, product);
   }
 
+  async getAll(): Promise<any[]> {
+    const data = await getDocs(this.productsRef);
+    let products: any[] = [];
+    data.forEach(doc => {
+      products.push({ key: doc.id, ...doc.data() })
+    })
+    return products
+  }
+
 }
