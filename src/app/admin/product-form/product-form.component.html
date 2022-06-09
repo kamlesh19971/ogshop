@@ -29,10 +29,12 @@
         id="price"
         class="form-control"
         type="number"
+        [min]="0"
       />
     </div>
     <div *ngIf="price.touched && price.invalid" class="alert alert-danger">
-      price is Required.
+      <div *ngIf="price.errors?.['required']">Price is required.</div>
+      <div *ngIf="price.errors?.['min']">Minimum Price is $0.</div>
     </div>
   </div>
 
@@ -68,13 +70,15 @@
       name="imageUrl"
       id="imageUrl"
       class="form-control"
+      url
     />
 
     <div
       *ngIf="imageUrl.touched && imageUrl.invalid"
       class="alert alert-danger"
     >
-      ImageUrl is Required.
+      <div *ngIf="imageUrl.errors?.['required']">ImageUrl is Required.</div>
+      <div *ngIf="imageUrl.errors?.['url']">Please Enter valid url</div>
     </div>
   </div>
   <br />
