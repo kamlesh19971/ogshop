@@ -19,7 +19,7 @@ export class AppComponent {
 
       userService.save(user);
 
-      let returnUrl: string = localStorage.getItem('returnUrl') || '/admin/products';
+      let returnUrl: string = localStorage.getItem('returnUrl') || '';
 
       if (!returnUrl) return;
 

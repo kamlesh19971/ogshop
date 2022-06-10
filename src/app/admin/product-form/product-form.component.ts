@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 import { CategoryService } from '../../services/category.service';
 
@@ -11,11 +12,12 @@ import { CategoryService } from '../../services/category.service';
 export class ProductFormComponent implements OnInit {
 
   categories!: any[];
-  product = {
+  product: Product = {
+    key: '',
     title: '',
     category: '',
     imageUrl: '',
-    price: null
+    price: 0
   };
   id!: any;
 

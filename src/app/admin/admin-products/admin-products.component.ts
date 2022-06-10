@@ -14,6 +14,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   items!: Product[];
   itemCount!: number;
   dtOptions: DataTables.Settings = {};
+  orderBy = true;
+  orderKey = '';
 
 
   constructor(private productService: ProductService) {
@@ -58,9 +60,9 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   // }
 
   sort(key: string) {
-
-
-    // this.
+    this.orderBy = this.orderKey === key ? !this.orderKey : true;
+    this.orderKey = key;
+    this.filteredProducts = this.products.sort((a: any, b: any) => this.orderBy ? a[this.orderKey] - b[this.orderKey] : b[this.orderKey] - a[this.orderKey]);
   }
 
 }
