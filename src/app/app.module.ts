@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
+import { DataTablesModule } from 'angular-datatables';
 
 import { environment } from 'src/environments/environment';
 
@@ -58,6 +59,7 @@ import { ProductService } from './services/product.service';
     BrowserModule,
     FormsModule,
     CustomFormsModule,
+    DataTablesModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,

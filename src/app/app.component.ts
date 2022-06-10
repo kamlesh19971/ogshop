@@ -14,26 +14,18 @@ export class AppComponent {
 
   constructor(private userService: UserService, private auth: AuthService, router: Router) {
     auth.user$.subscribe(user => {
-      if (user) {
-        userService.save(user);
-        let returnUrl: string = localStorage.getItem('returnUrl') || '/';
-        router.navigateByUrl(returnUrl);
 
-        // const user2 = this.userService.get(user.uid).snapshotChanges().pipe(
-        //   map((c: any) => {
-        //     console.log({ key: c.payload.key, ...c.payload.val() });
-        //     return c;
-        //   }
-        //   )
-        // ).subscribe(data => {
-        //   return data;
+      if (!user) return;
 
-        // });
-        // console.log(user2);
+      userService.save(user);
 
+      let returnUrl: string = localStorage.getItem('returnUrl') || '/admin/products';
 
+      if (!returnUrl) return;
 
-      }
+      localStorage.removeItem('returnUrl');
+      router.navigateByUrl(returnUrl);
+
     })
   }
 }
