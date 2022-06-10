@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, doc, DocumentData, addDoc, getDocs, getDoc, updateDoc, orderBy, query, onSnapshot, DocumentSnapshot } from 'firebase/firestore';
+import { CollectionReference, doc, DocumentData, addDoc, getDocs, getDoc, updateDoc, orderBy, query, onSnapshot, DocumentSnapshot, deleteDoc } from 'firebase/firestore';
 import { Firestore, collection } from '@angular/fire/firestore';
 
 
@@ -27,13 +27,17 @@ export class ProductService {
     return products
   }
 
-  async get(uid: string): Promise<any> {
-    const docRef = doc(this.productsRef, uid);
+  async get(productId: string): Promise<any> {
+    const docRef = doc(this.productsRef, productId);
     const docSnap = await getDoc(docRef);
     return docSnap.data();
   }
+
   async update(productId: string, product: any) {
     await updateDoc(doc(this.productsRef, productId), product);
+  }
 
+  async delete(productId: string) {
+    await deleteDoc(doc(this.productsRef, productId));
   }
 }
