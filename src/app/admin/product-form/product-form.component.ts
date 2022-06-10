@@ -11,7 +11,12 @@ import { CategoryService } from '../../services/category.service';
 export class ProductFormComponent implements OnInit {
 
   categories!: any[];
-  product: any;
+  product = {
+    title: '',
+    category: '',
+    imageUrl: '',
+    price: null
+  };
   id!: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private categoryService: CategoryService, private productService: ProductService) {
@@ -32,6 +37,7 @@ export class ProductFormComponent implements OnInit {
 
   async loadCategories() {
     this.categories = await this.categoryService.getCategories();
+    console.log(this.categories)
   }
 
   save(product: any) {
