@@ -30,13 +30,10 @@ export class ProductService {
   async get(uid: string): Promise<any> {
     const docRef = doc(this.productsRef, uid);
     const docSnap = await getDoc(docRef);
-
     return docSnap.data();
+  }
+  async update(productId: string, product: any) {
+    await updateDoc(doc(this.productsRef, productId), product);
 
-    // return onSnapshot(doc(this.productsRef, "SF"), (doc) => {
-    //   // const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-    //   console.log(source, " data: ", doc.data());
-    //   return doc;
-    // });
   }
 }

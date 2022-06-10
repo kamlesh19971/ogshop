@@ -12,6 +12,7 @@ export class ProductFormComponent implements OnInit {
 
   categories!: any[];
   product: any;
+  id!: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private categoryService: CategoryService, private productService: ProductService) {
   }
@@ -19,12 +20,10 @@ export class ProductFormComponent implements OnInit {
   ngOnInit(): void {
     this.loadCategories();
 
-    let id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id');
 
-    console.log(id)
-    if (id) {
-      this.productService.get(id).then(p => {
-        console.log(p)
+    if (this.id) {
+      this.productService.get(this.id).then(p => {
         this.product = p;
       })
     }
@@ -33,13 +32,13 @@ export class ProductFormComponent implements OnInit {
 
   async loadCategories() {
     this.categories = await this.categoryService.getCategories();
-    console.log(this.categories)
   }
 
   save(product: any) {
-    console.log(product);
 
-    this.productService.create(product);
+    if (this.id) this.productService.update(this.id, product);
+    else this.productService.create(product);
+
     this.router.navigate(['/admin/products'])
   }
 
