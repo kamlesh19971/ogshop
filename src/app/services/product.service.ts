@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, doc, DocumentData, addDoc, getDocs, setDoc, updateDoc, orderBy, query } from 'firebase/firestore';
+import { CollectionReference, doc, DocumentData, addDoc, getDocs, getDoc, updateDoc, orderBy, query, onSnapshot, DocumentSnapshot } from 'firebase/firestore';
 import { Firestore, collection } from '@angular/fire/firestore';
 
 
@@ -27,4 +27,16 @@ export class ProductService {
     return products
   }
 
+  async get(uid: string): Promise<any> {
+    const docRef = doc(this.productsRef, uid);
+    const docSnap = await getDoc(docRef);
+
+    return docSnap.data();
+
+    // return onSnapshot(doc(this.productsRef, "SF"), (doc) => {
+    //   // const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+    //   console.log(source, " data: ", doc.data());
+    //   return doc;
+    // });
+  }
 }

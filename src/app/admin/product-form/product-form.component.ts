@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { CategoryService } from '../../services/category.service';
 
@@ -11,12 +11,24 @@ import { CategoryService } from '../../services/category.service';
 export class ProductFormComponent implements OnInit {
 
   categories!: any[];
+  product: any;
 
-  constructor(private router: Router, private categoryService: CategoryService, private productService: ProductService) {
+  constructor(private router: Router, private route: ActivatedRoute, private categoryService: CategoryService, private productService: ProductService) {
   }
 
   ngOnInit(): void {
     this.loadCategories();
+
+    let id = this.route.snapshot.paramMap.get('id');
+
+    console.log(id)
+    if (id) {
+      this.productService.get(id).then(p => {
+        console.log(p)
+        this.product = p;
+      })
+    }
+
   }
 
   async loadCategories() {
