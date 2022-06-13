@@ -9,13 +9,15 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  cart!: ShoppingCart;
+  cart$!: any;
 
   constructor(private shoppingCartService: ShoppingCartService) { }
 
   async ngOnInit() {
-    this.cart = await this.shoppingCartService.getCart();
-    console.log(this.cart.totalItemsCount);
+    this.shoppingCartService.getCart().then(cart => {
+      this.cart$ = cart
+
+    });
   }
 
   clearCart() {

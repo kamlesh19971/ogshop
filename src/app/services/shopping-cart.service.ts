@@ -3,6 +3,7 @@ import { CollectionReference, doc, DocumentData, addDoc, getDocs, getDoc, update
 import { Firestore, collection } from '@angular/fire/firestore';
 import { ShoppingCart } from '../models/shopping-cart';
 import { Product } from '../models/product';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,14 @@ export class ShoppingCartService {
     const data = new ShoppingCart(docSnap.data()!['items']);
 
     return data;
+  }
+
+  async getCart2(): Promise<Observable<ShoppingCart>> {
+    let cartId = await this.getOrCreateCartId();
+    const docSnap = await getDoc(doc(this.shoppingCartRef, cartId));
+    const data = new ShoppingCart(docSnap.data()!['items']);
+
+    return of(data);
   }
 
   async clearCart(): Promise<any> {
