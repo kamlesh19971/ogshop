@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -39,7 +40,8 @@ import { ProductService } from './services/product.service';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
-
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ShoppingCartModule } from './shopping-cart/shopping.cart.module';
 
 
 @NgModule({
@@ -57,10 +59,12 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
     ProductFormComponent,
     ProductFilterComponent,
     ProductCardComponent,
-    ProductQuantityComponent
+    ProductQuantityComponent,
+    ShoppingCartComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   imports: [
+    CommonModule,
     BrowserModule,
     FormsModule,
     CustomFormsModule,
@@ -76,6 +80,7 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
 
       { path: '', component: ProductsComponent },
       { path: 'products', component: ProductsComponent },
+      { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'login', component: LoginComponent },
 
       { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
@@ -88,7 +93,8 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ]),
-    NgbModule
+    NgbModule,
+    ShoppingCartModule
   ],
   providers: [
     AngularFirestore,

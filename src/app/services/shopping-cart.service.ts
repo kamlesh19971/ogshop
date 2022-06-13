@@ -37,7 +37,7 @@ export class ShoppingCartService {
   }
 
 
-  private async getOrCreateCartId(): Promise<any> {
+  private async getOrCreateCartId(): Promise<string> {
     let cartId = localStorage.getItem('cartId')
     if (cartId) return cartId;
 
@@ -63,12 +63,10 @@ export class ShoppingCartService {
     return { id: uid };
   }
 
-  async getCart(cartId: string): Promise<any> {
-    // let cartId = await this.getOrCreateCartId();
-
+  async getCart(): Promise<ShoppingCart> {
+    let cartId = await this.getOrCreateCartId();
     const docSnap = await getDoc(doc(this.shoppingCartRef, cartId));
-    const data = docSnap.data();
-    // data.['map'](x => new ShoppingCart(x.items));
+    const data = new ShoppingCart(docSnap.data()!['items']);
 
     return data;
   }
@@ -77,9 +75,7 @@ export class ShoppingCartService {
 
   }
 
-
   async addToCart(product: Product) {
-    console.log(product)
     let cartId = await this.getOrCreateCartId();
 
 
@@ -107,6 +103,28 @@ export class ShoppingCartService {
   }
 
   async removeFromCart(product: Product) {
+    let cartId = await this.getOrCreateCartId();
 
+
+    let document = doc(this.shoppingCartRef, cartId);
+
+    let items: any = await getDoc(document);
+    items = items.get('items') || [];
+
+    const index = items.findIndex((i: any) => i.product.key == product.key);
+
+    if (items[index].quantity > 1) {
+      items[index] = {
+        ...items[index],
+        quantity: items[index].quantity - 1,
+      }
+    } else {
+      items = items.filter((x: any, i: number) => i !== index);
+
+    };
+
+    await updateDoc(doc(this.shoppingCartRef, cartId), {
+      items: items
+    });
   }
 }
