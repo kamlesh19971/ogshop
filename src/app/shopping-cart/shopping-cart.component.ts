@@ -14,9 +14,12 @@ export class ShoppingCartComponent implements OnInit {
   constructor(private shoppingCartService: ShoppingCartService) { }
 
   async ngOnInit() {
+    this.reloadCart();
+  }
+
+  reloadCart() {
     this.shoppingCartService.getCart().then(cart => {
       this.cart$ = cart
-
     });
   }
 

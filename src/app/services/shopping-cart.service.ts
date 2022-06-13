@@ -29,15 +29,6 @@ export class ShoppingCartService {
     return uuid;
   }
 
-  private async getItems(cartId: string, productId: string) {
-
-    let document = doc(this.shoppingCartRef, cartId);
-
-    let cartItems: any = await getDoc(document);
-    return cartItems.get('items') || [];
-  }
-
-
   private async getOrCreateCartId(): Promise<string> {
     let cartId = localStorage.getItem('cartId')
     if (cartId) return cartId;
@@ -93,7 +84,7 @@ export class ShoppingCartService {
     let items: any = await getDoc(document);
     items = items.get('items') || [];
 
-    const index = items.findIndex((i: any) => i.product.key == product.key);
+    const index = items.findIndex((i: any) => i.key == product.key);
 
     if (index > -1) {
       items[index] = {
@@ -102,7 +93,12 @@ export class ShoppingCartService {
       }
     } else {
       items = [
-        ...items, { product, quantity: 1 }
+        ...items, {
+          title: product.title,
+          imageUrl: product.imageUrl,
+          price: product.price,
+          quantity: 1
+        }
       ]
     };
 

@@ -1,5 +1,6 @@
-import { Component, Input, NgModule, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, OnInit, Output } from '@angular/core';
 import { Product } from '../models/product';
+import { ShoppingCart } from '../models/shopping-cart';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 
 @Component({
@@ -10,17 +11,23 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
 export class ProductQuantityComponent {
 
   @Input('product') product!: Product;
-  @Input('shopping-cart') shoppingCart!: any;
+  @Input('shopping-cart') shoppingCart!: ShoppingCart;
+
+  @Output() reloadCart = new EventEmitter<any>();
 
 
   constructor(private cartService: ShoppingCartService) { }
 
   addToCart() {
-    this.cartService.addToCart(this.product);
+    this.cartService.addToCart(this.product).then(() => {
+      this.reloadCart.emit();
+    });
   }
 
   removeFromCart() {
-    this.cartService.removeFromCart(this.product);
+    this.cartService.removeFromCart(this.product).then(() => {
+      this.reloadCart.emit();
+    });
   }
 
 }
