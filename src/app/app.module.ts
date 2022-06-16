@@ -105,7 +105,8 @@ import { ShoppingCartModule } from './shopping-cart/shopping.cart.module';
     AdminAuthGuard,
     AdminPermissions,
     CategoryService,
-    ProductService
+    ProductService,
+    BsNavbarComponent
   ],
 
   bootstrap: [AppComponent]

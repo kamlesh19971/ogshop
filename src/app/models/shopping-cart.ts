@@ -3,22 +3,23 @@ import { ShoppingCartItem } from './shopping-cart-item';
 
 export class ShoppingCart {
     items: ShoppingCartItem[] = [];
+    itemsCount = 0;
 
-    constructor(public itemsMap: { [key: number]: ShoppingCartItem }) {
+    // constructor(public itemsMap: { [key: number]: ShoppingCartItem }) {
+    constructor(items: ShoppingCartItem[]) {
+        console.log(items)
+        // this.itemsMap = itemsMap || [];
+        this.items = items;
+        this.itemsCount = items.reduce((acc, x) => acc + x.quantity, 0);
 
-        this.itemsMap = itemsMap || [];
-
-        for (let productId in itemsMap) {
-            let item = itemsMap[productId]
-            this.items.push(new ShoppingCartItem(item));
-            console.log(this.items)
-        }
+        // for (let productId in itemsMap) {
+        //     let item = itemsMap[productId]
+        //     this.items.push(new ShoppingCartItem(item));
+        // }
     }
 
     getQuantity(product: any) {
-        console.log(product)
         const item = this.items.find((i: any) => i.key === product.key);
-        console.log(item)
         return item ? item.quantity : 0;
     }
 

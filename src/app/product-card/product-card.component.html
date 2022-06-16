@@ -23,6 +23,7 @@
       <product-quantity
         [product]="product"
         [shopping-cart]="shoppingCart"
+        (reloadCart)="reloadCart.emit()"
       ></product-quantity>
     </ng-template>
   </div>

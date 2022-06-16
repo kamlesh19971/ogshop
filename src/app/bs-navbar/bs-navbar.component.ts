@@ -19,7 +19,6 @@ export class BsNavbarComponent implements OnInit {
 
   async loadCartIcount() {
     this.cart = await this.shoppingCartService.getCart();
-    console.log(this.cart.totalItemsCount);
   }
 
   ngOnInit() {

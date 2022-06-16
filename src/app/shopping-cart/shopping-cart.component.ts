@@ -24,7 +24,9 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   clearCart() {
-    this.shoppingCartService.clearCart();
+    this.shoppingCartService.clearCart().then(() => {
+      this.reloadCart();
+    });
   }
 
 }

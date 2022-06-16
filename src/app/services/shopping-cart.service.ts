@@ -59,7 +59,6 @@ export class ShoppingCartService {
     let cartId = await this.getOrCreateCartId();
     const docSnap = await getDoc(doc(this.shoppingCartRef, cartId));
     const data = new ShoppingCart(docSnap.data()!['items']);
-
     return data;
   }
 
@@ -72,7 +71,10 @@ export class ShoppingCartService {
   }
 
   async clearCart(): Promise<any> {
-
+    let cartId = await this.getOrCreateCartId();
+    await updateDoc(doc(this.shoppingCartRef, cartId), {
+      items: []
+    });
   }
 
   async addToCart(product: Product) {
@@ -94,6 +96,7 @@ export class ShoppingCartService {
     } else {
       items = [
         ...items, {
+          key: product.key,
           title: product.title,
           imageUrl: product.imageUrl,
           price: product.price,
@@ -125,7 +128,6 @@ export class ShoppingCartService {
       }
     } else {
       items = items.filter((x: any, i: number) => i !== index);
-
     };
 
     await updateDoc(doc(this.shoppingCartRef, cartId), {

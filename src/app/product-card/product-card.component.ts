@@ -16,7 +16,7 @@ export class ProductCardComponent implements OnInit {
   @Input('show-actions') showActions = true;
   @Input('shopping-cart') shoppingCart!: ShoppingCart;
 
-  @Output() reloadProduct = new EventEmitter<any>();
+  @Output() reloadCart = new EventEmitter<any>();
 
   constructor(private shoppingCartService: ShoppingCartService) { }
 
@@ -25,7 +25,7 @@ export class ProductCardComponent implements OnInit {
 
   async addToCart() {
     this.shoppingCartService.addToCart(this.product).then(() => {
-      this.reloadProduct.emit();
+      // this.reloadCart.emit();
     });
   }
 

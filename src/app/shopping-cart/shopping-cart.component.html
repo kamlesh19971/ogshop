@@ -1,17 +1,25 @@
 <h1>Shopping Cart</h1>
-<ng-container *ngIf="cart$" class="row col-10">
+<div *ngIf="cart$" class="row col-10">
   <p>You have {{ cart$.totalItemsCount }} items in your shopping cart.</p>
 
   <table class="table">
     <thead>
       <tr>
+        <th></th>
         <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
+        <th style="width: 230px" class="text-center">Quantity</th>
+        <th style="width: 200px" class="text-right">Price</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of cart$.items">
+        <td>
+          <div
+            [style.backgroundImage]="item.imageUrl"
+            class="thumbnail"
+            alt=""
+          ></div>
+        </td>
         <td>
           {{ item.title }}
         </td>
@@ -22,7 +30,7 @@
             (reloadCart)="reloadCart()"
           ></product-quantity>
         </td>
-        <td>
+        <td class="text-right">
           {{ item.totalPrice | currency: "USD":true }}
         </td>
       </tr>
@@ -31,8 +39,12 @@
       <tr>
         <th></th>
         <th></th>
-        <th>{{ cart$.totalPrice | currency: "USD":true }}</th>
+        <th></th>
+        <th colspan="4">{{ cart$.totalPrice | currency: "USD":true }}</th>
       </tr>
     </tfoot>
   </table>
-</ng-container>
+  <button (click)="clearCart()" class="btn btn-danger btn-sm">
+    Clear Cart
+  </button>
+</div>

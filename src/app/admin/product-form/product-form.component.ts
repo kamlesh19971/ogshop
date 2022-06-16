@@ -39,7 +39,6 @@ export class ProductFormComponent implements OnInit {
 
   async loadCategories() {
     this.categories = await this.categoryService.getCategories();
-    console.log(this.categories)
   }
 
   save(product: any) {
